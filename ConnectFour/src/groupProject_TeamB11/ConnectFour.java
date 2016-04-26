@@ -26,7 +26,21 @@ public class ConnectFour {
             System.out.println("Row:" + cRow + "  Column: " + cCol); 
         } 
     } 
-    
+     private static boolean calculateDraw(){
+    	int cntUserPieces=0;
+    	
+        for (int iRow = 0; iRow < 6; iRow ++){ 
+            for (int iCol = 0; iCol < 7; iCol++){ 
+                if(gameGrid[iRow][iCol]!= emptySpace){
+                	cntUserPieces+=1;
+                }
+            }                 
+        }  
+        if(cntUserPieces==42){
+        	isDraw=true;
+        }
+    	return isDraw;
+    }   
     private static boolean calculateWin(){       
   
         // check for a horizontal win on the game board 
