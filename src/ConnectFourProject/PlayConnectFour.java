@@ -1,46 +1,36 @@
 package ConnectFourProject;
 
-
 import javax.swing.JFrame;
 
 public class PlayConnectFour {
-	
+
 	static JFrame gMainFrame;
-	static JFrame gGameFrame;
 	static JFrame gPlayerFrame;
 	static JFrame gAboutFrame;
 	static JFrame gInstructionsFrame;
 	static ConnectFourFrame gBoardFrame;
 
-	
+	// start of the game
 	public static void main(String[] args) {
 
+		//creates required frames be be used throughout the game
 		gMainFrame = new MainFrame();
-		gGameFrame = new GameFrame();
-		gPlayerFrame = new PlayerFrame();
 		gAboutFrame = new AboutFrame();
 		gInstructionsFrame = new InstructionsFrame();
 		gBoardFrame = new ConnectFourFrame(0);
-		
+
+		// set screen to visible  this is the screen with options
 		PlayConnectFour.makeMeVisible(PlayConnectFour.gMainFrame);
 		runGame();
-
-//		SwingUtilities.invokeLater(new Runnable() {
-//			
-//			public void run() {
-//
-//				 gMainFrame = new MainFrame();
-//			}
-//		});
-
 	}
-	
+
+	// calls the game
 	public static void runGame() {
 		int gameCurStatus = 0;
 		int humanWins = 0, cpuWins = 0;
 
+		// start the game and keep track of the wins and losses
 		while (gameCurStatus != -1) {
-			//System.out.println("Checking Game Status...");
 			switch (gameCurStatus) {
 			case 0:
 				if (gBoardFrame.getHasWon()) {
@@ -55,11 +45,15 @@ public class PlayConnectFour {
 				}
 				break;
 			case 1:
+				// determine who won the game
+				// user wins the game
 				if (gBoardFrame.getWinner() == 1) {
 					humanWins++;
+				// computer wins the game
 				} else if (gBoardFrame.getWinner() == 2) {
 					cpuWins++;
 				}
+				// display the game score and winner
 				gBoardFrame.displayWin(humanWins, cpuWins);
 				if (gBoardFrame.getExit()) {
 					gameCurStatus = -1;
@@ -72,6 +66,7 @@ public class PlayConnectFour {
 				}
 				break;
 			case 2:
+				// no one wins the game
 				gBoardFrame.displayDraw();
 				if (gBoardFrame.getExit()) {
 					gameCurStatus = -1;
@@ -84,24 +79,18 @@ public class PlayConnectFour {
 				break;
 			}
 
-			try {
-				Thread.sleep(1000);
-			} catch (Exception e) {
-				// do nothing
-			}
 		}
 	}
 
-
+	// hide all frames and make them visible as required
 	public static void hideAll() {
 		gMainFrame.setVisible(false);
-		gGameFrame.setVisible(false);
-		gPlayerFrame.setVisible(false);
 		gAboutFrame.setVisible(false);
 		gInstructionsFrame.setVisible(false);
 		gBoardFrame.setVisible(false);
 	}
-	
+
+	// make only specific frame visible
 	public static void makeMeVisible(JFrame frame) {
 		hideAll();
 		frame.setLocationRelativeTo(null);

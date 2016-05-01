@@ -36,6 +36,7 @@ public class InstructionsFrame extends JFrame {
 		
 		
 		// Add action listeners
+		// go back to the main screen
 		main.addActionListener(new ActionListener() {
 			
 			@Override
@@ -46,6 +47,7 @@ public class InstructionsFrame extends JFrame {
 			});	
 		
 		// Add action listeners
+		// quit the game
 				quit.addActionListener(new ActionListener() {
 					
 					@Override
@@ -66,6 +68,7 @@ public class InstructionsFrame extends JFrame {
 		
 				
 				// Add action listeners
+				// go to the about game screen
 				about.addActionListener(new ActionListener() {
 
 					@Override

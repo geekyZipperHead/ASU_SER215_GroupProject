@@ -22,6 +22,7 @@ public class MainFrame extends JFrame {
 	public MainFrame() {
 		super ("Connect Four");
 				
+		// create the layout and the buttons for the game
 		setLayout(new FlowLayout());
 		final JButton instructions = new JButton("Instructions");
 		final JButton play = new JButton("Play");
@@ -30,7 +31,7 @@ public class MainFrame extends JFrame {
 		JLabel boardLabel = new JLabel("Game Board");
 	    gMainPanel = new JPanel();
 		
-
+	    // add the game mockup image to the frame
 		ImageIcon boardImage = new ImageIcon(getClass().getResource("/images/gameBoard.png"));
 		boardLabel = new JLabel(boardImage);
 				
@@ -42,19 +43,21 @@ public class MainFrame extends JFrame {
 		
 		
 		// Add action listeners
+		// this will kick off the main game
 		play.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 													
 				PlayConnectFour.hideAll();
-				PlayConnectFour.gPlayerFrame.setVisible(true); 
+				PlayConnectFour.makeMeVisible(PlayConnectFour.gBoardFrame);
 						
 			}
 
 			});	
 		
 		// Add action listeners
+		// quits the game but first gives the user another opportunity to continue the game
 				quit.addActionListener(new ActionListener() {
 					
 					@Override
@@ -74,6 +77,7 @@ public class MainFrame extends JFrame {
 					});	
 		
 		// Add action listeners
+	    // display the games instructions
 				instructions.addActionListener(new ActionListener() {
 
 					@Override
@@ -86,6 +90,7 @@ public class MainFrame extends JFrame {
 				});	
 		
 				// Add action listeners
+				// display the about you screen
 				about.addActionListener(new ActionListener() {
 
 					@Override

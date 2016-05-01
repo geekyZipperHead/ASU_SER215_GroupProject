@@ -5,10 +5,8 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -37,6 +35,7 @@ public class AboutFrame extends JFrame {
 		setTitle("Connect Four");
 		
 		// Add action listeners
+		// go back to the main screen
 				main.addActionListener(new ActionListener() {
 					
 					@Override
@@ -48,6 +47,7 @@ public class AboutFrame extends JFrame {
 					});	
 		
 		// Add action listeners
+		// quit the game
 				quit.addActionListener(new ActionListener() {
 					
 					@Override
@@ -67,6 +67,7 @@ public class AboutFrame extends JFrame {
 					});	
 		
 		// Add action listeners
+				// display the instructions
 				instructions.addActionListener(new ActionListener() {
 
 					@Override

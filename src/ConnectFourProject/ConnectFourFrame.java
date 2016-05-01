@@ -24,18 +24,12 @@ public class ConnectFourFrame extends JFrame {
     private boolean isDraw = false;
     private boolean exitApp = false;
     private boolean newGame = false;
-    private Player player1;
 
     //creating the image variables to be displayed with appropriate actions
     private ImageIcon emptySpace, humanPlayer, cpuPlayer;
     
   //creating the game board 
     ConnectFourBoard gameBoard = new ConnectFourBoard();
-
-    public void setPlayer1(Player player) {
-    	player1 = player;
-        setTitle("Connect Four - Team B11 : Player 1 = " + player1.getName());
-    }
     
     public ConnectFourFrame(int gameCount) {
         //This section is logic to connect the main app to the gui so that the app knows when a 
@@ -47,10 +41,8 @@ public class ConnectFourFrame extends JFrame {
         //assigning the JFrame properties and making the window not sizable
         setContentPane(panel);
         setSize(650, 500);
-//        frame.setResizable(false);
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//    	panel.removeAll();
 
     	if(gameCount==0){
         	try {
@@ -58,16 +50,13 @@ public class ConnectFourFrame extends JFrame {
     		   Thread.sleep(1000L);     
     		}
     		catch (Exception e1) {} 
-    	}
+    	}   
 
     	//assigning the images to the imageIcon variables from the images resource folder
-        emptySpace = new ImageIcon(getClass().getResource("/images/connectFour_empty.png"));
-        humanPlayer = new ImageIcon(getClass().getResource("/images/connectFour_red.png"));
+    	humanPlayer = new ImageIcon(getClass().getResource("/images/connectFour_red.png"));
         cpuPlayer = new ImageIcon(getClass().getResource("/images/connectFour_black.png"));
+        emptySpace = new ImageIcon(getClass().getResource("/images/connectFour_empty.png"));
         
-        //assigning the button color to be a light green, meaning it's a playable column        
-    	Color btnColor = new Color(138, 255,165);
-
         //creating the panel window, allowing an extra row in the grid layout for the button controls
         panel.setLayout(new GridLayout(numCols, numRows + 1));
 
@@ -81,10 +70,8 @@ public class ConnectFourFrame extends JFrame {
         //an action once the user clicks on a button.
         
         for (int i = 0; i < numCols; i++) {
-        	btnColSelect[i] = new JButton();
+        	btnColSelect[i] = new JButton("DROP DISC");
             btnColSelect[i].setLayout(new BorderLayout());
-            JLabel label1 = new JLabel("DROP");
-            JLabel label2 = new JLabel("Column: " + (i+1));
 
             btnColSelect[i].setActionCommand("" + i);
             btnColSelect[i].addActionListener(
@@ -121,7 +108,12 @@ public class ConnectFourFrame extends JFrame {
                                 {
                                 	//setting window title to next player turn and also disabling the column button if the column is full
                                     currentPlayer = gameBoard.nextTurn(currentPlayer);
-                                  //  frame.setTitle("Connect Four - Team B11 - (Player " + currentPlayer + "'s Turn!)");
+                                    if (currentPlayer == 1) {
+                                        setTitle("Connect Four - Team B11 - (Your Turn!)");
+                                    } else {
+                                        setTitle("Connect Four - Team B11 - (Computer's Turn!)");
+                                    }
+
                                     if(gameBoard.findSpace(selectCol)==-1){
                                     	btnColSelect[selectCol].setEnabled(false);
                                     	btnColSelect[selectCol].setBackground(Color.LIGHT_GRAY);
@@ -140,7 +132,7 @@ public class ConnectFourFrame extends JFrame {
                             		
                             		try {
                             				// pauses the main thread for 400ms so the computer pauses before making it's play 
-                            			   Thread.sleep(400L);                                  			 
+                            			   Thread.sleep(1000L);                                  			 
                             			}
                             		catch (Exception e1) {} 
                             			 
@@ -162,7 +154,11 @@ public class ConnectFourFrame extends JFrame {
                                     } else {
                                     	//setting the window title to current players turn and disabling column button if full                                    	
                                         currentPlayer = gameBoard.nextTurn(currentPlayer);
-                                        //frame.setTitle("Connect Four - Team B11 - (Player " + currentPlayer + "'s Turn!)");
+                                        if (currentPlayer == 1) {
+                                            setTitle("Connect Four - Team B11 - (Your Turn!)");
+                                        } else {
+                                            setTitle("Connect Four - Team B11 - (Computer's Turn!)");
+                                        }
                                         if(gameBoard.findSpace(selectCol)==-1){
                                         	btnColSelect[selectCol].setEnabled(false);
                                         	btnColSelect[selectCol].setBackground(Color.LIGHT_GRAY);
@@ -176,14 +172,9 @@ public class ConnectFourFrame extends JFrame {
 
             
             //setting the button and label text and font color properties
-            btnColSelect[i].setBackground(btnColor);
-            label1.setText("DROP");
-            label2.setText("Column: " + (i+1));
-            label1.setForeground(Color.BLACK);
-            label2.setForeground(Color.BLACK);  
-//            btnColSelect[i].add(drop);
-            btnColSelect[i].add(BorderLayout.NORTH,label1);
-            btnColSelect[i].add(BorderLayout.SOUTH,label2);
+            btnColSelect[i].setOpaque(true);
+            btnColSelect[i].setBackground(Color.BLACK);
+            btnColSelect[i].setForeground(Color.BLACK);
             panel.add(btnColSelect[i]);
         }
       
@@ -193,7 +184,8 @@ public class ConnectFourFrame extends JFrame {
             for (int column = 0; column < 7; column++) {
                 gameSpaces[row][column] = new JLabel(emptySpace);
                 gameSpaces[row][column].setHorizontalAlignment(SwingConstants.CENTER);
-                gameSpaces[row][column].setBorder(new LineBorder(Color.LIGHT_GRAY));
+                gameSpaces[row][column].setVerticalAlignment(SwingConstants.CENTER);
+                gameSpaces[row][column].setBorder(new LineBorder(Color.BLACK));
                 panel.add( gameSpaces[row][column]);        
             }
         }
@@ -201,48 +193,43 @@ public class ConnectFourFrame extends JFrame {
         //assigning the JFrame properties and making the window not sizable
         this.setContentPane(panel);
         this.setSize(650, 500);
-//        frame.setResizable(false);
         this.setLocationRelativeTo(null);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.pack();
         this.revalidate();
-//        JPanel newPanel = new JPanel();
-//        newPanel.add(new JLabel("TEST LABEL"));
-//        frame.setContentPane(newPanel);
-        System.out.println("Frame: "+ this + "Panel: "+panel);
-
     }
 
     public int getWinner() 
     {
     	return currentPlayer;
     }
-    public void displayWin(int humanWins, int cpuWins) 
+    
+    public boolean displayWin(int humanWins, int cpuWins) 
     {
     	String sWin = "";
     	if(currentPlayer==1)
     	{
-    		sWin = "Congratulations!  Player " + currentPlayer + " Wins!";
+    		sWin = "Congratulations!  You won!";
     		
         }
     	else if(currentPlayer==2)
         {
-    		sWin = "Sorry, the Computer Wins This Time!";
+    		sWin = "Sorry... Computer won.";
         }
-        int newGameMsgBox = JOptionPane.showConfirmDialog(this,"\n" + player1.getName() + ":  " 
-        + humanWins + " win(s)\nComputer:  " + cpuWins 
-        + " win(s)\n\nWant to try again?",sWin,JOptionPane.YES_NO_OPTION);        
+        int newGameMsgBox = JOptionPane.showConfirmDialog(this,"\nYour Score:     " +  
+        + humanWins + "\nComputer's Score:  " + cpuWins 
+        + "\n\nWant to try again?",sWin,JOptionPane.YES_NO_OPTION);        
         if (newGameMsgBox != JOptionPane.NO_OPTION) 
         {
-//        	frame.dispose();           
         	newGame = true;
         } 
         else 
         {
-//            frame.dispose();
+        	newGame = false;
         	System.exit(0);
             //exitApp = true;
         }
+        return newGame;
     }
 
     public void displayDraw() {
@@ -260,9 +247,11 @@ public class ConnectFourFrame extends JFrame {
             System.exit(0);
         }
     }
+    
     public boolean getNewGame() {
         return newGame;
     }
+    
     public boolean getHasWon() {
         return isWin;
     }
